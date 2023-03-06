@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import Head from "next/head";
-import styles from "./index.module.css";
-import AppContext from "./appContext";
+import styles from "../../index.module.css";
+import AppContext from "../utils/appContext";
 
 function MainScreen({children}) {
     const {prompt, setPrompt, answer, setAnswer, question, setQuestion, history, setHistory} = useContext(AppContext);

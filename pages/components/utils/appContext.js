@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import {basePrompt} from "./initialPrompt";
+import {basePrompt} from "../../data/initialPrompt";
 const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {

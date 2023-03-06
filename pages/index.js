@@ -1,8 +1,5 @@
-import Head from "next/head";
-import {useState} from "react";
-import styles from "./index.module.css";
-import {AppContextProvider} from "./appContext";
-import MainScreen from "./MainScreen";
+import {AppContextProvider} from "./components/utils/appContext";
+import MainScreen from "./components/ui/MainScreen";
 
 export default function Home() {
 
