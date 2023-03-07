@@ -40,7 +40,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 800px;
 }
 .main textarea {
   font-size: 16px;
@@ -49,6 +48,11 @@
   border-radius: 4px;
   margin-bottom: 24px;
   outline-color: #10a37f;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+  width: 90%;
 }
 
 .main ::placeholder {
@@ -66,19 +70,27 @@
 }
 .main .result {
   font-weight: bold;
-  font-size: 20px;
+  font-size: 18px;
   color: blue;
   margin-top: 40px;
-  margin-bottom: 20px;
+  padding:20px;
+  width: 750px;
+  max-width: 80%
 }
 
 .main .history {
   margin-top: 40px;
   margin-bottom: 20px;
-  width: 80%;
+  width: 850px;
+  max-width: 90%;
 }
 
-.main .historyItem {
+.main .historyQuestion {
   font-size: 14px;
   color: cornflowerblue;
+}
+
+.main .historyAnswer {
+  font-size: 14px;
+  color: darkgrey;
 }
