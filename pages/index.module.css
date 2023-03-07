@@ -27,7 +27,7 @@
   padding-top: 60px;
 }
 .main .icon {
-  width: 34px;
+  width: 80px;
 }
 .main h3 {
   font-size: 32px;
@@ -73,9 +73,12 @@
 }
 
 .main .history {
-  font-size: 14px;
-  color: cornflowerblue;
   margin-top: 40px;
   margin-bottom: 20px;
   width: 80%;
+}
+
+.main .historyItem {
+  font-size: 14px;
+  color: cornflowerblue;
 }

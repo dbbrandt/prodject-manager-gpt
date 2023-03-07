@@ -1,23 +1,39 @@
 import React, {useContext} from 'react';
 import Head from "next/head";
 import styles from "../../index.module.css";
-import AppContext from "../utils/appContext";
+import AppContext, {addToHistory} from "../utils/appContext";
+import HistoryList from "./HistoryList";
 
 function MainScreen({children}) {
     const {prompt, setPrompt, answer, setAnswer, question, setQuestion, history, setHistory} = useContext(AppContext);
     let newPrompt = prompt;
     let generatedText = "";
 
-    function updateHistory(question, answer) {
-        const newEntry = `${history}\n\n${question}\n[ANSWER]: ${answer}\n`;
-        setHistory(newEntry);
+    function addToHistory() {
+        console.log(`addToHistory: is history an array? ${Array.isArray(history)}`);
+        console.log(history);
+        if (!Array.isArray(history)) return history;
+        // const maxId = (history.length > 0) ?
+        //     history.reduce((prev, current) => (prev.id > current.id) ? prev.id : current.id, 0) : 1;
+        const maxId = history.length + 1;
+
+        const entry = {
+            id: maxId,
+            question: question,
+            answer: answer,
+        }
+
+        const newHistory = [...history,entry];
+        console.log(`addToHistory: history length = ${newHistory.length}`);
+        console.log(newHistory);
+        setHistory(newHistory);
     }
 
     async function onSubmit(event) {
         event.preventDefault();
         if (answer[0] !== '>') {
             newPrompt = `${prompt}\n${answer}\n`;
-            updateHistory(question, answer);
+            addToHistory();
             setAnswer(`${answer}....processing....`);
         }
         try {
@@ -45,17 +61,15 @@ function MainScreen({children}) {
         }
     }
 
-    console.log(`MainScreen: generation result: ${generatedText}`);
-    console.log(`MainScreen: new Prompt: ${newPrompt}`);
     return (
         <div>
             <Head>
                 <title>Product Manager Interview</title>
-                <link rel="icon" href="/dog.png"/>
+                <link rel="icon" href="/mindmeld.png"/>
             </Head>
 
             <main className={styles.main}>
-                <img src="/dog.png" className={styles.icon}/>
+                <img src="/mindmeld.png" className={styles.icon}/>
                 <h3>Respond to product questions.</h3>
                 <div className={styles.result}>{question}</div>
                 <form onSubmit={onSubmit}>
@@ -69,7 +83,9 @@ function MainScreen({children}) {
                     />
                     <input type="submit" value="Submit Answer"/>
                 </form>
-                <div className={styles.history}>{history}</div>
+                <div className={styles.history}>
+                    <HistoryList/>
+                </div>
             </main>
         </div>
     )
