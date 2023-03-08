@@ -1,11 +1,12 @@
 import React, {useContext} from 'react';
 import Head from "next/head";
 import styles from "../../index.module.css";
-import AppContext, {addToHistory} from "../utils/appContext";
+import AppContext from "../../../utils/appContext";
 import HistoryList from "./HistoryList";
 
 function MainScreen({children}) {
-    const {prompt, setPrompt, answer, setAnswer, question, setQuestion, history, setHistory} = useContext(AppContext);
+    const {prompt, setPrompt, answer, setAnswer, question,
+        setQuestion, history, setHistory} = useContext(AppContext) || {};
     let newPrompt = prompt;
     let generatedText = "";
 
@@ -15,7 +16,7 @@ function MainScreen({children}) {
         if (!Array.isArray(history)) return history;
         // const maxId = (history.length > 0) ?
         //     history.reduce((prev, current) => (prev.id > current.id) ? prev.id : current.id, 0) : 1;
-        const maxId = history.length + 1;
+        const maxId = history?.length + 1;
 
         const entry = {
             id: maxId,
@@ -24,7 +25,6 @@ function MainScreen({children}) {
         }
 
         const newHistory = [...history,entry];
-        console.log(`addToHistory: history length = ${newHistory.length}`);
         console.log(newHistory);
         setHistory(newHistory);
     }
