@@ -29,6 +29,22 @@ function MainScreen({children}) {
         setHistory(newHistory);
     }
 
+    async function generate() {
+        const response = await fetch("/api/generate", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({prompt: newPrompt, answer: answer}),
+        });
+
+        const data = await response.json();
+        if (response.status !== 200) {
+            throw data.error || new Error(`Request failed with status ${response.status}`);
+        }
+        return data;
+    }
+
     async function onSubmit(event) {
         event.preventDefault();
         if (answer[0] !== '>') {
@@ -37,18 +53,10 @@ function MainScreen({children}) {
             setAnswer(`${answer}....processing....`);
         }
         try {
-            const response = await fetch("/api/generate", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({prompt: newPrompt, answer: answer}),
-            });
+            let data = await generate();
+            console.log(`Data length: $data.result.length`)
+            if (data.result.length === 0) data = await generate();
 
-            const data = await response.json();
-            if (response.status !== 200) {
-                throw data.error || new Error(`Request failed with status ${response.status}`);
-            }
             generatedText = data.result;
             setQuestion(data.result);
             newPrompt = newPrompt + data.result;
